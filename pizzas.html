@@ -1,0 +1,164 @@
+<html>
+  <head>
+    <style>
+      .imagencss {
+        position: absolute;
+        top: 150px;
+        left: 400px;
+      }
+    </style>
+
+    <script>
+      let pizzas = [
+        {
+          codigo: "P1",
+          nombre: "Prosciutto",
+          ingredientes: [
+            { ingrediente: "salsa de tomate", precio: "0.5" },
+            { ingrediente: "mozzarella", precio: "0.5" },
+            { ingrediente: "jamón york", precio: "0.75" },
+          ],
+        },
+        {
+          codigo: "P2",
+          nombre: "Capricciosa",
+          ingredientes: [
+            { ingrediente: "salsa de tomate", precio: "0.5" },
+            { ingrediente: "mozzarella", precio: "0.5" },
+            { ingrediente: "jamón york", precio: "0.75" },
+            { ingrediente: "alcachofas", precio: "1" },
+            { ingrediente: "champiñones", precio: "0.5" },
+            { ingrediente: "olivas negras", precio: "0.25" },
+          ],
+        },
+        {
+          codigo: "P3",
+          nombre: "Cuatro Formaggi",
+          ingredientes: [
+            { ingrediente: "salsa de tomate", precio: "0.5" },
+            { ingrediente: "mozzarella", precio: "0.5" },
+            { ingrediente: "gorgonzola", precio: "1.25" },
+            { ingrediente: "emmemtal", precio: "1" },
+            { ingrediente: "brie", precio: "0.75" },
+          ],
+        },
+      ];
+    </script>
+  </head>
+
+  <body>
+    <h1>BENITO's PIZZERIA</h1>
+
+    <button id="p1" onclick="pizza('P1')">Prosciutto</button>
+    <button id="p2" onclick="pizza('P2')">Capricciosa</button>
+    <button id="p3" onclick="pizza('P3')">Cuatro Formaggi</button>
+
+    <h3 id="titulo_pizza">PIZZA ELEGIDA:</h3>
+
+    <!-- <select id="lista">
+      <option value="p1">Prosciuto</option>
+      <option value="p2">Capriciosa</option>
+      <option value="p3">Cuatro Formaggi</option>
+    </select> -->
+
+    <div id="fotopizza">IMAGEN</div>
+    <h3>Ingredientes:</h3>
+    <div id="ingredientes"></div>
+    <h2 id="importe">Importe :</h2>
+  </body>
+
+  <script>
+    //BUSCAMOS DE QUE PIZZA SE TRATA
+    function pizza(codigo) {
+      const pizza = pizzas.find(
+        (c) => c.codigo.toLowerCase() == codigo.toLowerCase()
+      );
+
+      //Imprimimos el titulo, los ingredientes y el precio
+      imprimir_titulo(pizza);
+      imprimir_ingredientes(pizza);
+      imprimir_precio(pizza);
+      imprimir_foto(pizza);
+      console.log(pizza.codigo);
+    }
+
+    //IMPRIMIMOS EL TITULO
+    function imprimir_titulo(pizza) {
+      document.getElementById("titulo_pizza").innerHTML = "";
+      const element = document.getElementById("titulo_pizza");
+
+      const parrafo = document.createElement("p");
+
+      element.appendChild(parrafo);
+
+      parrafo.innerHTML = pizza.nombre;
+    }
+
+    function imprimir_ingredientes(pizza) {
+      document.getElementById("ingredientes").innerHTML = "";
+      const element = document.getElementById("ingredientes");
+      const ul = document.createElement("ul");
+
+      element.appendChild(ul);
+
+      pizza.ingredientes.forEach((item) => {
+        let li = document.createElement("li");
+        ul.appendChild(li);
+
+        li.innerHTML += item.ingrediente;
+      });
+    }
+
+    function imprimir_precio(pizza) {
+      document.getElementById("importe").innerHTML = "";
+      const element = document.getElementById("importe");
+      const parrafo = document.createElement("p");
+
+      element.appendChild(parrafo);
+
+      let total = 0;
+      let precio = pizza.ingredientes.map((p) => p.precio);
+      for (let i of precio) {
+        total += parseFloat(i);
+      }
+
+      parrafo.innerHTML = total + 5;
+    }
+
+    function imprimir_foto(pizza) {
+      document.getElementById("fotopizza").innerHTML = "";
+      // const element = document.getElementById("fotopizza");
+
+      console.log("entra 1");
+
+      const foto = document.querySelector("#fotopizza");
+      var image = new Image();
+      const codigo = pizza.codigo;
+
+      switch (codigo) {
+        case "P1":
+          console.log("entra 2");
+          const img1 = "./P1.jpg";
+          image.src = img1;
+          document.getElementById("fotopizza").appendChild(image);
+
+          break;
+        case "P2":
+          const img2 = "./P2.jpg";
+          image.src = img2;
+          document.getElementById("fotopizza").appendChild(image);
+
+          break;
+        case "P3":
+          const img3 = "./P3.jpg";
+          image.src = img3;
+          document.getElementById("fotopizza").appendChild(image);
+
+          break;
+
+        default:
+          break;
+      }
+    }
+  </script>
+</html>
